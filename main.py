@@ -5,7 +5,9 @@ import os
 from database.db import create_pool
 from database.models import init_db
 
-
+import asyncio
+from fastapi import FastAPI
+from aiogram import Bot, Dispatcher
 app = FastAPI()
 
 db = None

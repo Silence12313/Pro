@@ -2,8 +2,10 @@ import os
 
 # Telegram
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-BOT_USERNAME = os.getenv("BOT_USERNAME")   # username бота без @
+BOT_USERNAME = os.getenv("BOT_USERNAME")
 
+TELEGRAM_REF_LINK = f"https://t.me/{BOT_USERNAME}?start=" if BOT_USERNAME else None
+BASE_REF_URL = os.getenv("BASE_REF_URL") or TELEGRAM_REF_LINK
 # MAX
 MAX_TOKEN = os.getenv("MAX_TOKEN")
 
@@ -12,12 +14,6 @@ CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME", "your_art_muse")
 
 # Реферальная система
 REFERRALS_REQUIRED = int(os.getenv("REFERRALS_REQUIRED", 3))
-
-# базовая ссылка Telegram
-TELEGRAM_REF_LINK = f"https://t.me/{BOT_USERNAME}?start="
-
-# универсальная реферальная ссылка (если есть домен)
-BASE_REF_URL = os.getenv("BASE_REF_URL", TELEGRAM_REF_LINK)
 
 # бонус
 BONUS_URL = os.getenv(

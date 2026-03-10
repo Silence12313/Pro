@@ -1,8 +1,8 @@
 import os
 
 # Telegram
-BOT_TOKEN = os.getenv("8233660891:AAHuLsyErkasMdsYXuLJFD_D3ax2TsR6OFI")
-BOT_USERNAME = os.getenv("Your_art_muse_new_bot")   # username бота без @
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+BOT_USERNAME = os.getenv("BOT_USERNAME")   # username бота без @
 
 # MAX
 MAX_TOKEN = os.getenv("MAX_TOKEN")

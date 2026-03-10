@@ -13,12 +13,10 @@ db = None
 
 @app.on_event("startup")
 async def startup():
-
     global db
-
     db = await create_pool()
 
-    await init_db(db)
+    asyncio.create_task(dp.start_polling(bot))
 
 
 @app.post("/telegram/webhook")

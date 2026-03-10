@@ -1,8 +1,12 @@
 from services.referral_service import generate_ref_code
+from aiogram.filters import CommandStart
 
+@router.message(CommandStart())
+async def start(message: Message):
+    await message.answer("Бот работает 🚀")
 
 async def start_user(db, user_id, ref_code):
-
+    
     user = await db.fetchrow(
         "SELECT * FROM users WHERE telegram_id=$1",
         user_id

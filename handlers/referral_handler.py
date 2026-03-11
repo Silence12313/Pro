@@ -12,7 +12,7 @@ async def referral_progress(message: Message):
 
     user_id = message.from_user.id
 
-    pool = message.bot.get("db")
+    pool = get_pool()
 
     async with pool.acquire() as conn:
 

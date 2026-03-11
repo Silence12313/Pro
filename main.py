@@ -2,12 +2,6 @@ import os
 from fastapi import FastAPI, Request
 import uvicorn
 
-
-from handlers.start_handler import router as start_router
-
-dp.include_router(start_router)
-
-
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 
@@ -15,8 +9,16 @@ from config import BOT_TOKEN
 from database.db import create_pool
 from database.models import init_db
 
+from handlers.start_handler import router as start_router
+from handlers.referral_handler import router as referral_router
+from handlers.export_handler import router as export_router
+
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
+
+dp.include_router(start_router)
+dp.include_router(referral_router)
+dp.include_router(export_router)
 
 app = FastAPI()
 
@@ -29,19 +31,28 @@ async def startup():
     global db
 
     db = await create_pool()
+
     await init_db(db)
 
 
 @app.post("/telegram/webhook")
 async def telegram_webhook(request: Request):
 
-    data = await request.json()
+    try:
 
-    update = Update(**data)
+        data = await request.json()
 
-    await dp.feed_update(bot, update)
+        update = Update(**data)
 
-    return {"ok": True}
+        await dp.feed_update(bot, update)
+
+        return {"ok": True}
+
+    except Exception as e:
+
+        print("Webhook error:", e)
+
+        return {"ok": False}
 
 
 @app.post("/max/webhook")

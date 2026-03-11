@@ -39,7 +39,7 @@ async def telegram_webhook(request: Request):
 
         data = await request.json()
 
-        update = Update(**data)
+        update = Update.model_validate(data)
 
         await dp.feed_update(bot, update)
 
@@ -47,9 +47,10 @@ async def telegram_webhook(request: Request):
 
     except Exception as e:
 
-        print("Webhook error:", e)
+        print("WEBHOOK ERROR:", e)
 
         return {"ok": False}
+
 
 
 @app.post("/max/webhook")

@@ -1,5 +1,6 @@
 from aiogram import Router
 from aiogram.types import Message
+from database.db import get_pool
 
 from config import REFERRALS_REQUIRED, BONUS_LINK
 from services.subscription_service import check_subscription

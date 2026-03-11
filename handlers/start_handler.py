@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
+from database.db import get_pool
 
 from services.referral_service import generate_referral_code, generate_referral_link
 from services.subscription_service import check_subscription
@@ -17,6 +18,9 @@ async def start_handler(message: Message):
     args = message.text.split()
 
     referral_code = None
+    pool = get_pool()
+
+    async with pool.acquire() as conn:
 
     if len(args) > 1:
         referral_code = args[1]

@@ -5,9 +5,26 @@ from aiogram.types import Message
 router = Router()
 from services.referral_service import generate_ref_code
 from aiogram.filters import CommandStart
-@router.message()
-async def test(message: Message):
-    await message.answer("ok")
+
+
+@app.post("/telegram/webhook")
+async def telegram_webhook(request: Request):
+
+    try:
+
+        data = await request.json()
+
+        update = Update(**data)
+
+        await dp.feed_update(bot, update)
+
+        return {"ok": True}
+
+    except Exception as e:
+
+        print("Webhook error:", e)
+
+        return {"ok": False}
 
 
 @router.message(CommandStart())

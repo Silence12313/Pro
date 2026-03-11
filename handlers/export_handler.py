@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
+from database.db import get_pool
 
 from utils.excel_export import export_users
 

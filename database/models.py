@@ -1,35 +1,21 @@
-async def init_db(db):
+async def init_db(pool):
 
-    await db.execute("""
-    CREATE TABLE IF NOT EXISTS users(
+    async with pool.acquire() as conn:
 
-        id SERIAL PRIMARY KEY,
+        await conn.execute("""
 
-        telegram_id BIGINT,
+        CREATE TABLE IF NOT EXISTS users (
 
-        max_id TEXT,
+            id SERIAL PRIMARY KEY,
+            telegram_id BIGINT UNIQUE,
+            first_name TEXT,
+            referral_code TEXT,
+            invited_by TEXT,
+            invited_count INTEGER DEFAULT 0,
+            subscribed BOOLEAN DEFAULT FALSE,
+            bonus_received BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
-        ref_code TEXT,
+        )
 
-        referrer_id BIGINT,
-
-        bonus_sent BOOLEAN DEFAULT FALSE,
-
-        created_at TIMESTAMP DEFAULT NOW()
-
-    )
-    """)
-
-    await db.execute("""
-    CREATE TABLE IF NOT EXISTS referrals(
-
-        id SERIAL PRIMARY KEY,
-
-        referrer_id BIGINT,
-
-        invited_id BIGINT,
-
-        created_at TIMESTAMP DEFAULT NOW()
-
-    )
-    """)
+        """)

@@ -1,6 +1,7 @@
-aiogram
 fastapi
 uvicorn
+aiogram
 asyncpg
+pandas
 openpyxl
 python-dotenv

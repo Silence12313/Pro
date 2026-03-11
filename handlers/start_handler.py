@@ -1,3 +1,8 @@
+from aiogram import Router
+from aiogram.filters import Command
+from aiogram.types import Message
+
+router = Router()
 from services.referral_service import generate_ref_code
 from aiogram.filters import CommandStart
 

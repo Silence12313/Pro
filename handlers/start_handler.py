@@ -25,7 +25,7 @@ async def start_handler(message: Message):
     if len(args) > 1:
         referral_code = args[1]
 
-    pool = message.bot.get("db")
+    pool = get_pool()
 
     async with pool.acquire() as conn:
 

@@ -6,6 +6,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 
 from config import BOT_TOKEN
+
 from database.db import create_pool
 from database.models import init_db
 
@@ -22,27 +23,13 @@ dp.include_router(export_router)
 
 app = FastAPI()
 
-db = None
-
 
 @app.on_event("startup")
 async def startup():
 
-    global db
-
     db = await create_pool()
 
     await init_db(db)
-@app.on_event("startup")
-async def startup():
-
-    global db
-
-    db = await create_pool()
-
-    await init_db(db)
-
-    bot["db"] = db
 
 
 @app.post("/telegram/webhook")

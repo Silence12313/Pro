@@ -1,12 +1,5 @@
 import os
 
-
-
-TELEGRAM_REF_LINK = f"https://t.me/{BOT_USERNAME}?start=" if BOT_USERNAME else None
-BASE_REF_URL = os.getenv("BASE_REF_URL") or TELEGRAM_REF_LINK
-# MAX
-MAX_TOKEN = os.getenv("MAX_TOKEN")
-
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 BOT_USERNAME = os.getenv("BOT_USERNAME")
@@ -19,5 +12,4 @@ BONUS_LINK = "https://www.youtube.com/playlist?list=PL2DjtAFoLP6w3ztMXg4eLzBPUj3
 
 CONSULT_LINK = "https://onstudy.org/konsultatsiya-art/"
 
-# администратор
-ADMIN_ID = int(os.getenv("ADMIN_ID", 0))
+TELEGRAM_REF_LINK = f"https://t.me/{BOT_USERNAME}?start=" if BOT_USERNAME else None

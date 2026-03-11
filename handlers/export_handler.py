@@ -1,12 +1,17 @@
-from services.export_service import export_users_to_excel
-from config import ADMIN_ID
+from aiogram import Router
+from aiogram.filters import Command
+from aiogram.types import Message
+
+from utils.excel_export import export_users
+
+router = Router()
 
 
-async def export_users(message, db):
+@router.message(Command("export"))
+async def export_data(message: Message):
 
-    if message.from_user.id != ADMIN_ID:
-        return
+    pool = message.bot.get("db")
 
-    file = await export_users_to_excel(db)
+    file = await export_users(pool)
 
-    await message.answer_document(file)
+    await message.answer_document(open(file, "rb"))

@@ -5,6 +5,10 @@ from aiogram.types import Message
 router = Router()
 from services.referral_service import generate_ref_code
 from aiogram.filters import CommandStart
+@router.message()
+async def test(message: Message):
+    await message.answer("ok")
+
 
 @router.message(CommandStart())
 async def start(message: Message):

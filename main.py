@@ -33,6 +33,16 @@ async def startup():
     db = await create_pool()
 
     await init_db(db)
+@app.on_event("startup")
+async def startup():
+
+    global db
+
+    db = await create_pool()
+
+    await init_db(db)
+
+    bot["db"] = db
 
 
 @app.post("/telegram/webhook")

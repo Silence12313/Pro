@@ -1,18 +1,11 @@
-async def check_subscription(bot, user_id, channel):
+from config import CHANNEL_USERNAME
 
-    try:
 
-        member = await bot.get_chat_member(
-            f"@{channel}",
-            user_id
-        )
+async def check_subscription(bot, user_id):
 
-        return member.status in [
-            "member",
-            "administrator",
-            "creator"
-        ]
+    member = await bot.get_chat_member(
+        chat_id=f"@{CHANNEL_USERNAME}",
+        user_id=user_id
+    )
 
-    except:
-
-        return False
+    return member.status in ["member", "administrator", "creator"]

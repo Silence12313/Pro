@@ -2,6 +2,12 @@ import os
 from fastapi import FastAPI, Request
 import uvicorn
 
+
+from handlers.start_handler import router as start_router
+
+dp.include_router(start_router)
+
+
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
 

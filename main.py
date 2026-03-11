@@ -1,13 +1,17 @@
+import os
 from fastapi import FastAPI, Request
 import uvicorn
-import os
 
+from aiogram import Bot, Dispatcher
+from aiogram.types import Update
+
+from config import BOT_TOKEN
 from database.db import create_pool
 from database.models import init_db
 
-import asyncio
-from fastapi import FastAPI
-from aiogram import Bot, Dispatcher
+bot = Bot(BOT_TOKEN)
+dp = Dispatcher()
+
 app = FastAPI()
 
 db = None
@@ -15,10 +19,11 @@ db = None
 
 @app.on_event("startup")
 async def startup():
-    global db
-    db = await create_pool()
 
-    asyncio.create_task(dp.start_polling(bot))
+    global db
+
+    db = await create_pool()
+    await init_db(db)
 
 
 @app.post("/telegram/webhook")
@@ -26,7 +31,9 @@ async def telegram_webhook(request: Request):
 
     data = await request.json()
 
-    print(data)
+    update = Update(**data)
+
+    await dp.feed_update(bot, update)
 
     return {"ok": True}
 
@@ -36,7 +43,7 @@ async def max_webhook(request: Request):
 
     data = await request.json()
 
-    print(data)
+    print("MAX event:", data)
 
     return {"ok": True}
 

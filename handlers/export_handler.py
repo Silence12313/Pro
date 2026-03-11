@@ -10,7 +10,7 @@ router = Router()
 @router.message(Command("export"))
 async def export_data(message: Message):
 
-    pool = message.bot.get("db")
+    pool = get_pool()
 
     file = await export_users(pool)
 

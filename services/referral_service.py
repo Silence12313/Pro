@@ -1,44 +1,12 @@
-import random
-import string
+import uuid
+from config import BOT_USERNAME
 
 
-def generate_ref_code():
+def generate_referral_code():
 
-    return ''.join(
-        random.choices(
-            string.ascii_letters + string.digits,
-            k=8
-        )
-    )
+    return str(uuid.uuid4())[:8]
 
 
-async def count_referrals(db, user_id):
+def generate_referral_link(code):
 
-    return await db.fetchval(
-        """
-        SELECT COUNT(*)
-        FROM referrals
-        WHERE referrer_id=$1
-        """,
-        user_id
-    )
-
-from config import BASE_REF_URL
-
-
-def generate_ref_link(ref_code):
-
-    return f"{BASE_REF_URL}{ref_code}"
-
-import random
-import string
-
-
-def generate_ref_code():
-
-    return ''.join(
-        random.choices(
-            string.ascii_letters + string.digits,
-            k=8
-        )
-    )
+    return f"https://t.me/{BOT_USERNAME}?start={code}"
